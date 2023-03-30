@@ -1,0 +1,19 @@
+.HeaderContainer {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    background-color: #1f1f1f;
+    color: white;
+    padding: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.HeaderContainer img {
+    height: 100%;
+    -webkit-filter: invert(100%) !important;
+}
+
+h1 {
+    flex: 1;
+}

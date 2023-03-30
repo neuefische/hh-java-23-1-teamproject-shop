@@ -1,0 +1,28 @@
+.ProductCard {
+    color: white;
+    width: 200px;
+    height: fit-content;
+    background-color: #2f2f2f;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.ProductCard img {
+    width: 100%;
+}
+
+.ProductContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.ProductText h3 {
+    font-weight: normal;
+    padding: 0.5rem;
+}
+
+.ProductText h4 {
+    font-size: medium;
+    font-weight: 300;
+    padding: 0.5rem;
+}

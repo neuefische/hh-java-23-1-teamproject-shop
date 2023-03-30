@@ -6,6 +6,7 @@ public record Product(
         String id,
         String name,
         double price,
-        ProductCategory productCategory
+        ProductCategory productCategory,
+        String imageURL
 ) {
 }

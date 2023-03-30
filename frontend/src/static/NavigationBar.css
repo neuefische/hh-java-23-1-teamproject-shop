@@ -1,0 +1,17 @@
+.NavigationBar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #2f2f2f;
+    align-items: center;
+    height: 5vh;
+}
+
+.NavigationItem {
+    font-size: 22px;
+    line-height: 5vh;
+    text-decoration: none;
+    color: white;
+    width: 25%;
+    height: inherit;
+    border: 1px #3f3f3f solid;
+}

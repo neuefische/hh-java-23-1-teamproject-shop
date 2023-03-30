@@ -1,0 +1,15 @@
+.ProductGallery {
+    padding: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    background-color: #3f3f3f;
+    min-height: 85vh;
+}
+
+@media only screen and (max-width: 607px)  {
+    .ProductGallery {
+        justify-content: center;
+    }
+}
