@@ -10,8 +10,8 @@ export default function ProductGallery() {
 
     return (
         <div className={"ProductGallery"}>
-            {context.allProducts.map(p => {
-                return <ProductCard key={p.id} product={p}/>
+            {context.allProducts.map(product => {
+                return <ProductCard key={product.id} product={product}/>
             })}
         </div>
     )
