@@ -1,4 +1,4 @@
-import {createContext, ReactElement, useContext, useEffect, useState} from "react";
+import {createContext, ReactElement, useEffect, useState} from "react";
 import {Product} from "./model/product";
 import axios from "axios";
 import {toast} from "react-toastify";
