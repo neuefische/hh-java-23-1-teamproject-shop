@@ -15,7 +15,7 @@ export default function ProductContext(props: {children: ReactElement}) {
     )
 
     function getAllProducts(): void {
-        axios.get("api/product")
+        axios.get("/api/product")
             .then(response => setAllProducts(response.data))
             .catch(() => toast.error("Loading page failed!\nTry again later"))
     }
