@@ -7,9 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -50,5 +52,39 @@ class ProductIntegrationTest {
         mvc.perform(get("/api/product"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[" + jsonProduct + "]"));
+    }
+
+
+
+    @Test
+    @DirtiesContext
+    void postProduct_expectProductInRepository() throws Exception {
+        String responseJson =
+                mvc.perform(
+                        post("/api/product")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonProduct))
+                        .andExpect(status().isCreated())
+                        .andExpect(content().json("""
+                                {
+                                    "name": "salad",
+                                    "price": 3.5,
+                                    "productCategory": "SALAD",
+                                    "imageURL": ""
+                                }
+                                """))
+                        .andExpect(jsonPath("$.id").isNotEmpty())
+                        .andReturn()
+                        .getResponse()
+                        .getContentAsString();
+
+        Product actual = mapper.readValue(responseJson, Product.class);
+        Product expected = new Product(
+                actual.id(),
+                dummyProduct.name(),
+                dummyProduct.price(),
+                dummyProduct.productCategory(),
+                dummyProduct.imageURL());
+        assertThat(productRepository.getProductMap()).containsEntry(actual.id(), expected);
     }
 }
