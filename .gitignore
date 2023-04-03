@@ -1,2 +1,5 @@
 .idea
 backend/target
+backend/src/main/resources/static
+
+frontend/build
