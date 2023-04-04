@@ -14,7 +14,7 @@ public class ProductService {
     private final IdService idService;
 
     public List<Product> findAllProducts() {
-        return productRepository.getProductMap().values().stream().toList();
+        return productRepository.findAll();
     }
 
     public Product saveProduct(Product product) {
