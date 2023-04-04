@@ -12,4 +12,6 @@ public record Product(
         ProductCategory productCategory,
         String imageURL
 ) {
+
 }
+
