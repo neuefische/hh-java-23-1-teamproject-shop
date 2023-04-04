@@ -3,14 +3,24 @@ import {Product} from "./model/product";
 import axios from "axios";
 import {toast} from "react-toastify";
 
-export const ProductProvider = createContext<{allProducts: Product[], currentProduct: Product, getById: (id: string) => void}>({allProducts: [], currentProduct: {id:"", name:"", price:0, productCategory: "SALAD", imageURL: ""}, getById: id => {}})
+export const ProductProvider = createContext<{ allProducts: Product[], currentProduct: Product, getById: (id: string) => void }>({
+    allProducts: [],
+    currentProduct: {id: "", name: "", price: 0, productCategory: "SALAD", imageURL: ""},
+    getById: id => {
+    }
+})
 
-export default function ProductContext(props: {children: ReactElement}) {
+export default function ProductContext(props: { children: ReactElement }) {
     const [allProduct, setAllProducts] = useState<Product[]>([])
-    const [currentProduct, setCurrentProduct] = useState<Product>({id:"", name:"", price:0, productCategory: "SALAD", imageURL: ""})
+    const [currentProduct, setCurrentProduct] = useState<Product>({
+        id: "",
+        name: "",
+        price: 0,
+        productCategory: "SALAD",
+        imageURL: ""
+    })
 
-    useEffect(() =>
-        {
+    useEffect(() => {
             getAllProducts()
         }, []
     )
@@ -29,8 +39,10 @@ export default function ProductContext(props: {children: ReactElement}) {
     }
 
     return (
-        <ProductProvider.Provider value={{allProducts: allProduct, currentProduct: currentProduct, getById: getProductById}}>
+        <ProductProvider.Provider
+            value={{allProducts: allProduct, currentProduct: currentProduct, getById: getProductById}}>
             {props.children}
         </ProductProvider.Provider>
     )
 }
+

@@ -5,6 +5,7 @@ import {ToastContainer} from "react-toastify";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Header from "./static/Header";
 import 'react-toastify/dist/ReactToastify.css';
+import ProductDetail from "./product/detail/ProductDetail";
 
 
 function App() {
@@ -15,6 +16,9 @@ function App() {
                 <Routes>
                     <Route path={"/menu"} element={
                         <ProductGallery/>
+                    }/>
+                    <Route path={"/details/:id"} element={
+                        <ProductDetail/>
                     }/>
                 </Routes>
             </BrowserRouter>
