@@ -13,4 +13,9 @@ public class ProductRepository {
     private final Map<String, Product> productMap = new HashMap<>();
 
 
+
+    public Product save(Product product) {
+        this.productMap.put(product.id(), product);
+        return this.productMap.get(product.id());
+    }
 }

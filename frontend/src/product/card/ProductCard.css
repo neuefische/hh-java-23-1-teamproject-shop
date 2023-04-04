@@ -1,14 +1,18 @@
 .ProductCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     color: white;
     width: 200px;
-    height: fit-content;
+    height: 200px;
     background-color: #2f2f2f;
     padding: 1.5rem;
     border-radius: 15px;
 }
 
 .ProductCard img {
-    width: 100%;
+    max-height: 70%;
+    object-fit: contain;
 }
 
 .ProductContainer {
