@@ -5,7 +5,7 @@ import {ProductProvider} from "../../ProductContext";
 
 export default function AddView() {
 
-    const dummyProduct: Product = {id: "", name: "", price: 0, productCategory: "APPETIZER", imageURL: ""}
+    const dummyProduct: Product = {id: "", name: "", price: 0, productCategory: "APPETIZER", imageURL: "", vegan: false, warnings: []}
     const [newProduct, setNewProduct] = useState<Product>(dummyProduct)
     const context = useContext(ProductProvider)
 

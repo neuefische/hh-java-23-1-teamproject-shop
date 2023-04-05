@@ -4,6 +4,8 @@ import ProductGallery from "./product/gallery/ProductGallery";
 import {ToastContainer} from "react-toastify";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Header from "./static/Header";
+
+import AddView from "./product/addView/AddView";
 import 'react-toastify/dist/ReactToastify.css';
 import ProductDetail from "./product/detail/ProductDetail";
 
@@ -19,6 +21,9 @@ function App() {
                     }/>
                     <Route path={"/product/details/:id"} element={
                         <ProductDetail/>
+                    }/>
+                    <Route path={"/add"} element={
+                        <AddView/>
                     }/>
                 </Routes>
             </BrowserRouter>

@@ -1,5 +1,6 @@
 package de.neuefische.backend.product;
 
+import de.neuefische.backend.service.IdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final IdService idService;
 
     public List<Product> findAllProducts() {
         return productRepository.findAll();
@@ -25,5 +27,19 @@ public class ProductService {
         }
 
         return product.get();
+    }
+
+    public Product saveProduct(Product product) {
+        String newId = idService.createId();
+        Product newProduct = new Product(
+                newId,
+                product.name(),
+                product.price(),
+                product.productCategory(),
+                product.imageURL(),
+                product.vegan(),
+                product.warningsList()
+        );
+        return productRepository.save(newProduct);
     }
 }

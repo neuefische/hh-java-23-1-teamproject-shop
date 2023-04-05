@@ -43,32 +43,14 @@ class ProductIntegrationTest {
     }
 
 
-    /*@Test
+    @Test
     @DirtiesContext
     void getAllProducts_expectedListWithOneElement_whenRepoHasOneElement() throws Exception {
-        productRepository.save(dummyProduct);
-        String result = mvc.perform(get("/api/product"))
+        productRepository.getProductMap().put("123", dummyProduct);
+        mvc.perform(get("/api/product"))
                 .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-
-
-        List<Product> jsonList = mapper.readValues(result, List<Product.class>);
-
-        *//*jsonList.stream().map(product -> {
-            try {
-                return mapper.readValue(product, Product.class);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        }).forEach(System.out::println);*//*
-
-        List<Product> expected = productRepository.findAll().stream().toList();
-
-        //assertThat(actual).isEqualTo(expected);
+                .andExpect(content().json("[" + jsonProduct + "]"));
     }
-*/
 
 
     @Test
