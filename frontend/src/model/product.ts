@@ -4,4 +4,7 @@ export type Product = {
     price: number,
     productCategory: "APPETIZER" | "MAIN_DISH" | "SALAD" | "DESSERT" | "SNACK" | "DRINK",
     imageURL: string
+    warnings : ("GLUTEN" | "LACTOSE" | "FRUCTOSE" | "NUTS")[]
+    vegan: boolean
+
 }
