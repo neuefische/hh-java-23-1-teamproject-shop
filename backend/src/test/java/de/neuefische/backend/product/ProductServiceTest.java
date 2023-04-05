@@ -29,14 +29,14 @@ class ProductServiceTest {
     @Test
     void findAllProducts_expectedEmptyList_WhenRepositoryIsEmpty() {
         //Given
-        when(productRepository.getProductMap())
-                .thenReturn(Collections.emptyMap());
+        when(productRepository.findAll())
+                .thenReturn(Collections.emptyList());
 
         //When
         List<Product> actual = productService.findAllProducts();
 
         //Then
-        verify(productRepository).getProductMap();
+        verify(productRepository).findAll();
         assertThat(actual).isInstanceOf(List.class).isEmpty();
 
     }
@@ -44,14 +44,14 @@ class ProductServiceTest {
     @Test
     void findAllProducts_expectedListWithOneProduct_WhenRepoContainsOneProduct() {
         //Given
-        when(productRepository.getProductMap())
-                .thenReturn(Map.of("123", product));
+        when(productRepository.findAll())
+                .thenReturn(List.of(product));
 
         //When
         List<Product> actual = productService.findAllProducts();
 
         //Then
-        verify(productRepository).getProductMap();
+        verify(productRepository).findAll();
         assertThat(actual).isInstanceOf(List.class).contains(product);
     }
 

@@ -13,7 +13,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public List<Product> findAllProducts() {
-        return productRepository.getProductMap().values().stream().toList();
+        return productRepository.findAll();
     }
 
     public Product findProductById(String id) {
