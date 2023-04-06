@@ -1,6 +1,5 @@
 package de.neuefische.backend.product;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.backend.product.model.ProductCategory;
 import de.neuefische.backend.product.model.Warnings;
@@ -14,7 +13,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -86,5 +84,16 @@ class ProductIntegrationTest {
                 dummyProduct.vegan(),
                 dummyProduct.warningsList());
         assertThat(productRepository.findAll()).contains(expected);
+    }
+
+    @Test
+    @DirtiesContext
+    void deleteProduct() throws Exception {
+        productRepository.save(dummyProduct);
+        mvc.perform(delete("/api/product/" + dummyProduct.id()))
+                .andExpect(status().isNoContent());
+        assertThat(productRepository.findAll()).doesNotContain(dummyProduct);
+        mvc.perform(delete("/api/product/" + dummyProduct.id()))
+                .andExpect(status().isNotFound());
     }
 }
