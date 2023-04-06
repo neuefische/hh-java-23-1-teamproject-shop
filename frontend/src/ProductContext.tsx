@@ -5,7 +5,7 @@ import {toast} from "react-toastify";
 
 export const ProductProvider = createContext<{ allProducts: Product[], currentProduct: Product, getById: (id: string) => void, post: (product: Product) => void }>({
     allProducts: [],
-    currentProduct: {id: "", name: "", price: 0, productCategory: "SALAD", imageURL: "", vegan: false, warnings: []},
+    currentProduct: {id: "", name: "", price: 0, productCategory: "SALAD", imageURL: "", vegan: false, warningsList: []},
     getById: () => {},
     post: () => {}
 })
@@ -19,7 +19,7 @@ export default function ProductContext(props: { children: ReactElement }) {
         productCategory: "SALAD",
         imageURL: "",
         vegan: false,
-        warnings: []
+        warningsList: []
     })
 
     useEffect(() => {
@@ -42,8 +42,8 @@ export default function ProductContext(props: { children: ReactElement }) {
 
     function postProduct(product: Product): void {
         axios.post<Product>("/api/product", product)
-            .then(() => {
-                setAllProducts([...allProducts, product])
+            .then(response => {
+                setAllProducts([...allProducts, response.data])
                 toast.success("Successfully added!")
             })
             .catch(() => toast.error("Failed to add product!"))

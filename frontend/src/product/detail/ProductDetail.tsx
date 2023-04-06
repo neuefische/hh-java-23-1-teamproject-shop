@@ -23,6 +23,8 @@ export default function ProductDetail() {
                 <p>{context.currentProduct.name}</p>
                 <p>{context.currentProduct.price}</p>
                 <p>{context.currentProduct.id}</p>
+                <p>{context.currentProduct.warningsList}</p>
+                {context.currentProduct.vegan && <p>vegan</p>}
             </div>
         </div>
     )
