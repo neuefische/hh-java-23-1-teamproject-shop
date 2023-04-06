@@ -1,6 +1,7 @@
 package de.neuefische.backend.product;
 
 import de.neuefische.backend.product.model.ProductCategory;
+import de.neuefische.backend.product.model.Warnings;
 import de.neuefische.backend.service.IdService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,8 @@ class ProductServiceTest {
 
     @BeforeEach
     void setUp() {
-        product = new Product("123", "salad", 3.5, ProductCategory.SALAD, "");
-        productWithoutId = new Product("", "salad", 3.5, ProductCategory.SALAD, "");
+        product = new Product("123", "salad", 3.5, ProductCategory.SALAD, "", true, List.of(Warnings.FRUCTOSE, Warnings.LACTOSE));
+        productWithoutId = new Product("", "salad", 3.5, ProductCategory.SALAD, "", true, List.of(Warnings.FRUCTOSE, Warnings.LACTOSE));
     }
 
     @Test
@@ -71,5 +72,12 @@ class ProductServiceTest {
         verify(idService).createId();
         verify(productRepository).save(product);
         assertThat(actual).isEqualTo(product);
+    }
+
+    @Test
+    void findProductById_expectProduct_whenProductExists() {
+        //Given
+        when(productRepository.findById(product.id()))
+                .thenReturn(product)
     }
 }
