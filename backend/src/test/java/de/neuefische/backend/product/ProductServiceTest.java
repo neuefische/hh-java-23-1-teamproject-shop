@@ -78,7 +78,7 @@ class ProductServiceTest {
         when(productRepository.findById(product.id()))
                 .thenReturn(Optional.ofNullable(product));
 
-         // WHEN
+        // WHEN
 
         Product actual = productService.findProductById(product.id());
 
@@ -89,29 +89,17 @@ class ProductServiceTest {
     }
 
     @Test
-    void findProductById_expectProduct_whenProductDoesNotExists() {
+    void findProductById_expectNoSuchElementException_whenProductDoesNotExists() {
         //Given
-        when(productRepository.findById("123"))
+        when(productRepository.findById("false-id"))
                 .thenReturn(Optional.empty());
 
-        // WHEN
+        //When
+        Exception actual = catchException(() -> productService.findProductById("false-id"));
+        NoSuchElementException expected = new NoSuchElementException();
 
-        try {
-        productService.findProductById("123");
         //Then
-
-        } catch (NoSuchElementException ignored){
-        }
-
-        verify(productRepository).findById("123");
-
-
-
+        verify(productRepository).findById("false-id");
+        assertThat(actual).isInstanceOf(expected.getClass()).hasMessageContaining("false-id");
     }
-
-
-//        // Then
-//        verify(productRepository).findById(product.id());
-//        assertThat(actual).isEqualTo(product);
-
-    }
+}
