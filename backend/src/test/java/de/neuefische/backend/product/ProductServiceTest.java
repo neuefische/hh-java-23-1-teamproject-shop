@@ -6,9 +6,7 @@ import de.neuefische.backend.service.IdService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -78,6 +76,42 @@ class ProductServiceTest {
     void findProductById_expectProduct_whenProductExists() {
         //Given
         when(productRepository.findById(product.id()))
-                .thenReturn(product)
+                .thenReturn(Optional.ofNullable(product));
+
+         // WHEN
+
+        Product actual = productService.findProductById(product.id());
+
+        // Then
+        verify(productRepository).findById(product.id());
+        assertThat(actual).isEqualTo(product);
+
     }
-}
+
+    @Test
+    void findProductById_expectProduct_whenProductDoesNotExists() {
+        //Given
+        when(productRepository.findById("123"))
+                .thenReturn(Optional.empty());
+
+        // WHEN
+
+        try {
+        productService.findProductById("123");
+        //Then
+
+        } catch (NoSuchElementException ignored){
+        }
+
+        verify(productRepository).findById("123");
+
+
+
+    }
+
+
+//        // Then
+//        verify(productRepository).findById(product.id());
+//        assertThat(actual).isEqualTo(product);
+
+    }
