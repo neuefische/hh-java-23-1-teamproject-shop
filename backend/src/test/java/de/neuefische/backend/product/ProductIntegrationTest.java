@@ -96,4 +96,14 @@ class ProductIntegrationTest {
         mvc.perform(delete("/api/product/" + dummyProduct.id()))
                 .andExpect(status().isNotFound());
     }
+
+
+    @Test
+    @DirtiesContext
+    void getProductById() throws Exception {
+        productRepository.save(dummyProduct);
+        mvc.perform(get("/api/product/" + dummyProduct.id()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(jsonProduct));
+    }
 }
