@@ -78,8 +78,7 @@ class ProductServiceTest {
         when(productRepository.findById(product.id()))
                 .thenReturn(Optional.ofNullable(product));
 
-        // WHEN
-
+        // When
         Product actual = productService.findProductById(product.id());
 
         // Then

@@ -14,6 +14,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductRepository productRepository;
 
 
     @GetMapping
@@ -30,4 +31,14 @@ public class ProductController {
     public ResponseEntity<Product> postProduct(@RequestBody Product product) {
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable String id) {
+        if (productRepository.existsById(id)) {
+            productService.deleteProduct(id);
+            return ResponseEntity.noContent().build();
+        }
+        else return ResponseEntity.notFound().build();
+    }
+
 }
