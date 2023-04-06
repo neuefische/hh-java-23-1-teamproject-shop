@@ -3,11 +3,12 @@ import {Product} from "./model/product";
 import axios from "axios";
 import {toast} from "react-toastify";
 
-export const ProductProvider = createContext<{ allProducts: Product[], currentProduct: Product, getById: (id: string) => void, post: (product: Product) => void }>({
+export const ProductProvider = createContext<{ allProducts: Product[], currentProduct: Product, getById: (id: string) => void, post: (product: Product) => void, delete: (id: string) => void }>({
     allProducts: [],
     currentProduct: {id: "", name: "", price: 0, productCategory: "SALAD", imageURL: "", vegan: false, warningsList: []},
     getById: () => {},
-    post: () => {}
+    post: () => {},
+    delete: () => {}
 })
 
 export default function ProductContext(props: { children: ReactElement }) {
@@ -49,9 +50,17 @@ export default function ProductContext(props: { children: ReactElement }) {
             .catch(() => toast.error("Failed to add product!"))
     }
 
+    function deleteProduct(id: string) {
+        axios.delete('/api/product/' + id)
+            .then(() => {
+                setAllProducts(allProducts.filter((product) => product.id !== id))
+            })
+            .catch(console.error)
+    }
+
     return (
         <ProductProvider.Provider
-            value={{allProducts: allProducts, currentProduct: currentProduct, getById: getProductById, post: postProduct}}>
+            value={{allProducts: allProducts, currentProduct: currentProduct, getById: getProductById, post: postProduct, delete: deleteProduct}}>
             {props.children}
         </ProductProvider.Provider>
     )
