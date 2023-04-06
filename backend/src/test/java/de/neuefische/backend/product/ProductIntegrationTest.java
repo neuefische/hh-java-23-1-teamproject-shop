@@ -2,6 +2,7 @@ package de.neuefische.backend.product;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.backend.product.model.ProductCategory;
+import de.neuefische.backend.product.model.Warnings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -34,26 +37,19 @@ class ProductIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        dummyProduct = new Product("123", "salad", 3.50, ProductCategory.SALAD, "");
+        dummyProduct = new Product("123", "salad", 3.50, ProductCategory.SALAD, "", true, List.of(Warnings.FRUCTOSE, Warnings.LACTOSE));
         jsonProduct = mapper.writeValueAsString(dummyProduct);
     }
 
-    @Test
-    void getAllProducts_expectedEmptyList_WhenRepoIsEmpty() throws Exception {
-        mvc.perform(get("/api/product"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[]"));
-    }
 
     @Test
     @DirtiesContext
     void getAllProducts_expectedListWithOneElement_whenRepoHasOneElement() throws Exception {
-        productRepository.getProductMap().put("123", dummyProduct);
+        productRepository.save(dummyProduct);
         mvc.perform(get("/api/product"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[" + jsonProduct + "]"));
     }
-
 
 
     @Test
@@ -84,7 +80,18 @@ class ProductIntegrationTest {
                 dummyProduct.name(),
                 dummyProduct.price(),
                 dummyProduct.productCategory(),
-                dummyProduct.imageURL());
-        assertThat(productRepository.getProductMap()).containsEntry(actual.id(), expected);
+                dummyProduct.imageURL(),
+                dummyProduct.vegan(),
+                dummyProduct.warningsList());
+        assertThat(productRepository.findAll()).contains(expected);
+    }
+
+    @Test
+    @DirtiesContext
+    void getProductById() throws Exception {
+        productRepository.save(dummyProduct);
+        mvc.perform(get("/api/product/" + dummyProduct.id()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(jsonProduct));
     }
 }

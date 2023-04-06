@@ -3,36 +3,57 @@ import {Product} from "./model/product";
 import axios from "axios";
 import {toast} from "react-toastify";
 
-export const ProductProvider = createContext<{allProducts: Product[], post: (product: Product) => void}>
-                                ({allProducts: [], post: () => {}})
+export const ProductProvider = createContext<{ allProducts: Product[], currentProduct: Product, getById: (id: string) => void, post: (product: Product) => void }>({
+    allProducts: [],
+    currentProduct: {id: "", name: "", price: 0, productCategory: "SALAD", imageURL: "", vegan: false, warningsList: []},
+    getById: () => {},
+    post: () => {}
+})
 
-export default function ProductContext(props: {children: ReactElement}) {
-    const [products, setProducts] = useState<Product[]>([])
+export default function ProductContext(props: { children: ReactElement }) {
+    const [allProducts, setAllProducts] = useState<Product[]>([])
+    const [currentProduct, setCurrentProduct] = useState<Product>({
+        id: "",
+        name: "",
+        price: 0,
+        productCategory: "SALAD",
+        imageURL: "",
+        vegan: false,
+        warningsList: []
+    })
 
-    useEffect(() =>
-        {
+    useEffect(() => {
             getAllProducts()
         }, []
     )
 
     function getAllProducts(): void {
         axios.get("/api/product")
-            .then(response => setProducts(response.data))
+            .then(response => setAllProducts(response.data))
             .catch(() => toast.error("Loading page failed!\nTry again later"))
     }
 
-    function postProduct(product: Product): void {
-        axios.post("/api/product", product)
+    function getProductById(id: string): void {
+        axios.get<Product>(`/api/product/${id}`)
             .then(response => {
-                setProducts([...products, response.data])
-                toast.success("Successfully added! :D")
+                setCurrentProduct(response.data)
             })
-            .catch(() => toast.error("Not added!\nTry again later"))
+    }
+
+    function postProduct(product: Product): void {
+        axios.post<Product>("/api/product", product)
+            .then(response => {
+                setAllProducts([...allProducts, response.data])
+                toast.success("Successfully added!")
+            })
+            .catch(() => toast.error("Failed to add product!"))
     }
 
     return (
-        <ProductProvider.Provider value={{allProducts: products, post: postProduct}}>
+        <ProductProvider.Provider
+            value={{allProducts: allProducts, currentProduct: currentProduct, getById: getProductById, post: postProduct}}>
             {props.children}
         </ProductProvider.Provider>
     )
 }
+
