@@ -2,6 +2,7 @@ package de.neuefische.backend.product;
 
 import de.neuefische.backend.service.IdService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final IdService idService;
+
 
     public List<Product> findAllProducts() {
         return productRepository.findAll();
@@ -46,4 +48,8 @@ public class ProductService {
     public void deleteProduct(String id) {
         productRepository.deleteById(id);
     }
+
+
+
+
 }

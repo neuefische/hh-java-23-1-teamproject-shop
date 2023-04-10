@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -41,4 +42,11 @@ public class ProductController {
         else return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("{id}")
+   public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product){
+        if (!product.id().equals(id)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The id does not match the request bodys id");
+        }
+        return new ResponseEntity<>(productService.saveProduct(product),HttpStatus.CREATED);
+    }
 }
