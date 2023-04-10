@@ -43,14 +43,13 @@ public class ProductController {
     }
 
 
-     @PutMapping("{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product){
-        if (!product.id().equals(id)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The id does not match the request bodys id");
+    @PutMapping("{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product) {
+        if (!product.id().equals(id)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The id does not match the request body's id");
         }
-        return productService.updateProduct(id, product)
-                .map(updatedProduct -> new ResponseEntity<>(updatedProduct, HttpStatus.OK))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+        return ResponseEntity.of(productService.updateProduct(id, product));
     }
+
 }
 

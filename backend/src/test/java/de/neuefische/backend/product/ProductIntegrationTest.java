@@ -113,7 +113,7 @@ class ProductIntegrationTest {
 
         productRepository.save(dummyProduct);
 
-        Product toUpdateProduct = new Product(dummyProduct.id(), "new salad", 4.00, ProductCategory.SALAD, "https://example.com/new-image.jpg", true, List.of(Warnings.GLUTEN, Warnings.NUTS));
+        Product toUpdateProduct = new Product(dummyProduct.id(), "new salad", 4.00, ProductCategory.SALAD, "", true, List.of(Warnings.GLUTEN, Warnings.NUTS));
         String jsonModifiedProduct = mapper.writeValueAsString(toUpdateProduct);
 
 
@@ -126,4 +126,22 @@ class ProductIntegrationTest {
 
         assertThat(productRepository.findById(dummyProduct.id()).orElseThrow()).isEqualTo(toUpdateProduct);
     }
+
+    @Test
+    @DirtiesContext
+    void updateProductWithWrongIDsExpectBadRequest() throws Exception {
+        productRepository.save(dummyProduct);
+
+        Product toUpdateProduct = new Product("mismatched-id", "new salad", 4.00, ProductCategory.SALAD, "", true, List.of(Warnings.GLUTEN, Warnings.NUTS));
+        String jsonModifiedProduct = mapper.writeValueAsString(toUpdateProduct);
+
+        mvc.perform(put("/api/product/" + dummyProduct.id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonModifiedProduct))
+                .andExpect(status().isBadRequest())
+                .andExpect(status().reason("The id does not match the request body's id"));
+
+        assertThat(productRepository.findById(dummyProduct.id()).orElseThrow()).isEqualTo(dummyProduct);
+    }
+
 }
