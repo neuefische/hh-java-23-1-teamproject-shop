@@ -54,12 +54,11 @@ public class ProductService {
     public Optional<Product> updateProduct(String id, Product product) {
         Optional<Product> existingProduct = productRepository.findById(id);
         if (existingProduct.isPresent()) {
-            // Delete the old product
+
             productRepository.deleteById(id);
 
-            // Create a new product with a new ID
             Product newProduct = new Product(
-                    UUID.randomUUID().toString(), // Generate a new UUID for the new product
+                    UUID.randomUUID().toString(),
                     product.name(),
                     product.price(),
                     product.productCategory(),
@@ -68,7 +67,6 @@ public class ProductService {
                     product.warningsList()
             );
 
-            // Save the new product into the database
             newProduct = productRepository.save(newProduct);
             return Optional.of(newProduct);
         } else {
