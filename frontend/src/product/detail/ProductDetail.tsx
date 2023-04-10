@@ -60,6 +60,10 @@ export default function ProductDetail() {
             <div className={"DetailElement"}>
                 {context.currentProduct.vegan && <p>vegan</p>}
             </div>
+            <div className={"DetailElement"}>
+                <label>ID: </label>
+                <p>{context.currentProduct.id}</p>
+            </div>
         </div>
     )
 }

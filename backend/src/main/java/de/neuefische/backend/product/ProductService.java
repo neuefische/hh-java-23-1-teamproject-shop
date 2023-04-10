@@ -56,9 +56,9 @@ public class ProductService {
         if (existingProduct.isPresent()) {
 
             productRepository.deleteById(id);
-
+            String newId = id;
             Product newProduct = new Product(
-                    UUID.randomUUID().toString(),
+                    newId,
                     product.name(),
                     product.price(),
                     product.productCategory(),
