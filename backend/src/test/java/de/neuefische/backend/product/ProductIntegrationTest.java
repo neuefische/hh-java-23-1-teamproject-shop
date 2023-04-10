@@ -109,7 +109,7 @@ class ProductIntegrationTest {
 
     @Test
     @DirtiesContext
-    void updateProduct_expectProductUpdatedInRepository() throws Exception {
+    void UpdateProductCorrectExpectUpdatedProduct() throws Exception {
 
         productRepository.save(dummyProduct);
 
@@ -129,7 +129,7 @@ class ProductIntegrationTest {
 
     @Test
     @DirtiesContext
-    void updateProductWithWrongIDsExpectBadRequest() throws Exception {
+    void UpdateProductWrongIDExpectBadRequest() throws Exception {
         productRepository.save(dummyProduct);
 
         Product toUpdateProduct = new Product("mismatched-id", "new salad", 4.00, ProductCategory.SALAD, "", true, List.of(Warnings.GLUTEN, Warnings.NUTS));
