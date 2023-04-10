@@ -8,6 +8,7 @@ import Header from "./static/Header";
 import AddView from "./product/addView/AddView";
 import 'react-toastify/dist/ReactToastify.css';
 import ProductDetail from "./product/detail/ProductDetail";
+import ChangeView from "./product/changeView/ChangeView";
 
 
 function App() {
@@ -24,6 +25,9 @@ function App() {
                     }/>
                     <Route path={"/add"} element={
                         <AddView/>
+                    }/>
+                    <Route path={"/change"} element={
+                        <ChangeView/>
                     }/>
                 </Routes>
             </BrowserRouter>

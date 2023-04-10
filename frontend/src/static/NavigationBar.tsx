@@ -8,7 +8,8 @@ export default function NavigationBar() {
             <NavLink className={"NavigationItem"} to={"/home"}>Home</NavLink>
             <NavLink className={"NavigationItem"} to={"/menu"}>Menü</NavLink>
             <NavLink className={"NavigationItem"} to={"/order"}>Bestellen</NavLink>
-            <NavLink className={"NavigationItem"} to={"/add"}>Formular</NavLink>
+            <NavLink className={"NavigationItem"} to={"/add"}>Hinzufügen</NavLink>
+            <NavLink className={"NavigationItem"} to={"/change"}>Ändern</NavLink>
         </div>
     )
 }
