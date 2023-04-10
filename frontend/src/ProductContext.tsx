@@ -3,12 +3,14 @@ import {Product} from "./model/product";
 import axios from "axios";
 import {toast} from "react-toastify";
 
-export const ProductProvider = createContext<{ allProducts: Product[], currentProduct: Product, getById: (id: string) => void, post: (product: Product) => void, delete: (id: string) => void }>({
+export const ProductProvider = createContext<{ allProducts: Product[], currentProduct: Product, getById: (id: string) => void, post: (product: Product) => void, delete: (id: string) => void,
+    update: (id:string, product:Product) => void}>({
     allProducts: [],
     currentProduct: {id: "", name: "", price: 0, productCategory: "SALAD", imageURL: "", vegan: false, warningsList: []},
     getById: () => {},
     post: () => {},
-    delete: () => {}
+    delete: () => {},
+    update: () => {}
 })
 
 export default function ProductContext(props: { children: ReactElement }) {
@@ -58,11 +60,22 @@ export default function ProductContext(props: { children: ReactElement }) {
             .catch(console.error)
     }
 
+    function updateProduct(id: string, product: Product): void {
+        axios.put<Product>(`/api/product/${id}`, product)
+            .then(response => {
+                setAllProducts(allProducts.map(p => p.id === response.data.id ? response.data : p));
+                setCurrentProduct(response.data);
+                toast.success("Successfully updated!");
+            })
+            .catch(() => toast.error("Failed to update product!"));
+    }
+
     return (
         <ProductProvider.Provider
-            value={{allProducts: allProducts, currentProduct: currentProduct, getById: getProductById, post: postProduct, delete: deleteProduct}}>
+            value={{allProducts: allProducts, currentProduct: currentProduct, getById: getProductById, post: postProduct, delete: deleteProduct, update: updateProduct}}>
             {props.children}
         </ProductProvider.Provider>
+
     )
 }
 
