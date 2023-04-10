@@ -106,4 +106,24 @@ class ProductIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(jsonProduct));
     }
+
+    @Test
+    @DirtiesContext
+    void updateProduct_expectProductUpdatedInRepository() throws Exception {
+
+        productRepository.save(dummyProduct);
+
+        Product toUpdateProduct = new Product(dummyProduct.id(), "new salad", 4.00, ProductCategory.SALAD, "https://example.com/new-image.jpg", true, List.of(Warnings.GLUTEN, Warnings.NUTS));
+        String jsonModifiedProduct = mapper.writeValueAsString(toUpdateProduct);
+
+
+        mvc.perform(put("/api/product/" + dummyProduct.id())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonModifiedProduct))
+                .andExpect(status().isOk())
+                .andExpect(content().json(jsonModifiedProduct));
+
+
+        assertThat(productRepository.findById(dummyProduct.id()).orElseThrow()).isEqualTo(toUpdateProduct);
+    }
 }
