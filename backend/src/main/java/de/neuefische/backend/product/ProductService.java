@@ -2,12 +2,13 @@ package de.neuefische.backend.product;
 
 import de.neuefische.backend.service.IdService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +51,31 @@ public class ProductService {
     }
 
 
+    public Optional<Product> updateProduct(String id, Product product) {
+        Optional<Product> existingProduct = productRepository.findById(id);
+        if (existingProduct.isPresent()) {
+            // Delete the old product
+            productRepository.deleteById(id);
 
+            // Create a new product with a new ID
+            Product newProduct = new Product(
+                    UUID.randomUUID().toString(), // Generate a new UUID for the new product
+                    product.name(),
+                    product.price(),
+                    product.productCategory(),
+                    product.imageURL(),
+                    product.vegan(),
+                    product.warningsList()
+            );
 
+            // Save the new product into the database
+            newProduct = productRepository.save(newProduct);
+            return Optional.of(newProduct);
+        } else {
+            return Optional.empty();
+        }
+    }
 }
+
+
+
