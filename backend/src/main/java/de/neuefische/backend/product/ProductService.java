@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Service
@@ -51,27 +50,8 @@ public class ProductService {
     }
 
 
-    public Optional<Product> updateProduct(String id, Product product) {
-        Optional<Product> existingProduct = productRepository.findById(id);
-        if (existingProduct.isPresent()) {
-
-            productRepository.deleteById(id);
-            String newId = id;
-            Product newProduct = new Product(
-                    newId,
-                    product.name(),
-                    product.price(),
-                    product.productCategory(),
-                    product.imageURL(),
-                    product.vegan(),
-                    product.warningsList()
-            );
-
-            newProduct = productRepository.save(newProduct);
-            return Optional.of(newProduct);
-        } else {
-            return Optional.empty();
-        }
+    public Product updateProduct(Product product) {
+        return productRepository.save(product);
     }
 }
 

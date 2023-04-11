@@ -26,7 +26,7 @@ function App() {
                     <Route path={"/add"} element={
                         <AddView/>
                     }/>
-                    <Route path={"/change"} element={
+                    <Route path={"product/edit/:id"} element={
                         <ChangeView/>
                     }/>
                 </Routes>

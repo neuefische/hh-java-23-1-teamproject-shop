@@ -29,6 +29,7 @@ export default function ProductCard(props: ProductCardProps) {
                 <div>
                     <button onClick={()=> {navigate("/product/details/" + props.product.id)}}>Details</button>
                     <button onClick={onDeleteClick}>Delete</button>
+                    <button onClick={()=> {navigate("/product/edit/" + props.product.id)}}>Edit</button>
                 </div>
             </div>
         </div>
