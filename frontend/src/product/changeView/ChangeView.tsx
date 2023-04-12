@@ -1,78 +1,40 @@
 import "./ChangeView.css"
-import {ChangeEvent, FormEvent, useContext, useEffect, useState} from "react";
-import {Product} from "../../model/product";
+import {useContext, useEffect} from "react";
 import {ProductProvider} from "../../ProductContext";
 import {useParams} from "react-router-dom";
+import {FormProvider} from "../FormContext";
 
 export default function ChangeView() {
 
-    const dummyProduct: Product = {
-        id: "",
-        name: "",
-        price: 0,
-        productCategory: "APPETIZER",
-        imageURL: "",
-        vegan: false,
-        warningsList: []
-    }
-    const [newProduct, setNewProduct] = useState<Product>(dummyProduct)
     const context = useContext(ProductProvider)
+    const formContext = useContext(FormProvider)
     const {id} = useParams<{ id: string }>()
 
     useEffect(() => {
         if (id) {
             context.getById(id)
-            setNewProduct(context.currentProduct)
         }
     }, [])
 
-    function onInputChange(event: ChangeEvent<HTMLInputElement>): void {
-        setNewProduct({...newProduct, [event.target.name]: event.target.value})
-    }
-
-    function onCheckBoxChange(event: ChangeEvent<HTMLInputElement>): void {
-        setNewProduct({...newProduct, [event.target.name]: event.target.checked})
-
-    }
-
-    function onCheckBoxChangeWhenList(event: ChangeEvent<HTMLInputElement>): void {
-        let newWarningsList: string[] = newProduct.warningsList
-        if (event.target.checked) {
-            newWarningsList.push(event.target.value)
-        } else {
-            newWarningsList = newWarningsList.filter(warning => warning !== event.target.value)
-        }
-        setNewProduct({...newProduct, [event.target.name]: newWarningsList})
-
-    }
-
-    function onSelectChange(event: ChangeEvent<HTMLSelectElement>) {
-        setNewProduct({...newProduct, [event.target.name]: event.target.value})
-    }
-
-    function onSave(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault()
-        context.update(newProduct.id, newProduct)
-    }
 
     return (
         <div className={"AddView"}>
-            <form onSubmit={onSave}>
+            <form onSubmit={formContext.save}>
                 <div className={"form-element"}>
                     <label htmlFor={"product-name"}>Name: </label>
-                    <input type={"text"} id={"product-name"} name={"name"} value={newProduct.name}
-                           onChange={onInputChange}/>
+                    <input type={"text"} id={"product-name"} name={"name"} value={formContext.newProduct.name}
+                           onChange={formContext.inputChange}/>
                 </div>
                 <div className={"form-element"}>
                     <label htmlFor={"product-price"}>Preis: </label>
-                    <input type={"number"} id={"product-price"} name={"price"} value={newProduct.price}
-                           onChange={onInputChange}/>
+                    <input type={"number"} id={"product-price"} name={"price"} value={context.currentProduct.price}
+                           onChange={formContext.inputChange}/>
                 </div>
                 <div className={"form-element"}>
                     <label htmlFor={"product-category"}>Kategorie: </label>
                     <select id={"product-category"} name={"productCategory"}
-                            value={newProduct.productCategory}
-                            onChange={onSelectChange}>
+                            value={context.currentProduct.productCategory}
+                            onChange={formContext.selectChange}>
                         <option value={"APPETIZER"}>Vorspeise</option>
                         <option value={"SALAD"}>Salat</option>
                         <option value={"MAIN_DISH"}>Hauptspeise</option>
@@ -84,13 +46,13 @@ export default function ChangeView() {
                 <div className={"form-element"}>
                     <label htmlFor={"product-image-url"}>Bild-url: </label>
                     <input type={"text"} id={"product-image-url"} name={"imageURL"}
-                           value={newProduct.imageURL}
-                           onChange={onInputChange}/>
+                           value={context.currentProduct.imageURL}
+                           onChange={formContext.inputChange}/>
                 </div>
                 <div className={"form-element"}>
                     <label htmlFor={"product-vegan"}>Vegan</label>
-                    <input type={"checkbox"} id={"product-vegan"} name={"vegan"} checked={newProduct.vegan}
-                           onChange={onCheckBoxChange}/>
+                    <input type={"checkbox"} id={"product-vegan"} name={"vegan"} checked={context.currentProduct.vegan}
+                           onChange={formContext.checkboxChange}/>
                 </div>
                 <div className={"form-element"}>
                     <label htmlFor={"product-warnings"}>Unverträglichkeiten:</label>
@@ -98,23 +60,23 @@ export default function ChangeView() {
                         <label htmlFor={"warning-gluten"}> <input type={"checkbox"} id={"product-warnings"}
                                                                   name={"warningsList"}
                                                                   value={"GLUTEN"}
-                                                                  onChange={onCheckBoxChangeWhenList}
-                                                                  checked={newProduct.warningsList.includes("GLUTEN")}/>Gluten</label>
+                                                                  onChange={formContext.checkboxListChange}
+                                                                  checked={context.currentProduct.warningsList.includes("GLUTEN")}/>Gluten</label>
                         <label htmlFor={"warning-lactose"}><input type={"checkbox"} id={"product-warnings"}
                                                                   name={"warningsList"}
                                                                   value={"LACTOSE"}
-                                                                  onChange={onCheckBoxChangeWhenList}
-                                                                  checked={newProduct.warningsList.includes("LACTOSE")}/>Lactose</label>
+                                                                  onChange={formContext.checkboxListChange}
+                                                                  checked={context.currentProduct.warningsList.includes("LACTOSE")}/>Lactose</label>
                         <label htmlFor={"warning-fructose"}> <input type={"checkbox"} id={"product-warnings"}
                                                                     name={"warningsList"}
                                                                     value={"FRUCTOSE"}
-                                                                    onChange={onCheckBoxChangeWhenList}
-                                                                    checked={newProduct.warningsList.includes("FRUCTOSE")}/>Fructose</label>
+                                                                    onChange={formContext.checkboxListChange}
+                                                                    checked={context.currentProduct.warningsList.includes("FRUCTOSE")}/>Fructose</label>
                         <label htmlFor={"warning-nuts"}> <input type={"checkbox"} id={"product-warnings"}
                                                                 name={"warningsList"}
                                                                 value={"NUTS"}
-                                                                onChange={onCheckBoxChangeWhenList}
-                                                                checked={newProduct.warningsList.includes("NUTS")}/>Nüsse</label>
+                                                                onChange={formContext.checkboxListChange}
+                                                                checked={context.currentProduct.warningsList.includes("NUTS")}/>Nüsse</label>
 
                     </div>
 

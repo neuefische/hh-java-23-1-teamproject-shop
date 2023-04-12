@@ -9,6 +9,7 @@ import AddView from "./product/addView/AddView";
 import 'react-toastify/dist/ReactToastify.css';
 import ProductDetail from "./product/detail/ProductDetail";
 import ChangeView from "./product/changeView/ChangeView";
+import FormContext from "./product/FormContext";
 
 
 function App() {
@@ -24,10 +25,14 @@ function App() {
                         <ProductDetail/>
                     }/>
                     <Route path={"/add"} element={
-                        <AddView/>
+                        <FormContext>
+                            <AddView/>
+                        </FormContext>
                     }/>
                     <Route path={"product/edit/:id"} element={
-                        <ChangeView/>
+                        <FormContext>
+                            <ChangeView/>
+                        </FormContext>
                     }/>
                 </Routes>
             </BrowserRouter>

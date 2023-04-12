@@ -10,3 +10,13 @@ export type Product = {
 }
 
 export type warning = "GLUTEN" | "LACTOSE" | "FRUCTOSE" | "NUTS"
+
+export const dummyProduct: Product = {
+    id: "",
+    name: "",
+    price: 0,
+    productCategory: "APPETIZER",
+    imageURL: "",
+    vegan: false,
+    warningsList: []
+}
