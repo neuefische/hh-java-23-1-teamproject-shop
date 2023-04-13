@@ -3,23 +3,17 @@ package de.neuefische.backend.product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.backend.product.model.ProductCategory;
 import de.neuefische.backend.product.model.Warnings;
-import de.neuefische.backend.security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.List;
-
-import static de.neuefische.backend.security.Role.ADMIN;
 import static org.assertj.core.api.Assertions.*;
-import static org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.with;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -106,8 +100,6 @@ class ProductIntegrationTest {
                 .andExpect(status().isNotFound());
 
     }
-
-
     @Test
     @DirtiesContext
     void getProductById() throws Exception {
