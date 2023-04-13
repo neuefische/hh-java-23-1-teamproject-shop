@@ -1,9 +1,11 @@
 package de.neuefische.backend.product;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> postProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> postProduct(@RequestBody @Valid Product product) {
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
 
