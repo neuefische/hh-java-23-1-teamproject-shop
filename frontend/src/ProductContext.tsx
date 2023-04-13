@@ -3,14 +3,23 @@ import {dummyProduct, Product} from "./model/product";
 import axios from "axios";
 import {toast} from "react-toastify";
 
-export const ProductProvider = createContext<{ allProducts: Product[], currentProduct: Product, getById: (id: string) => void, post: (product: Product) => void, delete: (id: string) => void,
-    update: (id:string, product:Product) => void}>({
+export const ProductProvider = createContext<{
+    allProducts: Product[],
+    currentProduct: Product,
+    getById: (id: string) => void,
+    post: (product: Product) => void,
+    delete: (id: string) => void,
+    update: (id:string, product:Product) => void,
+    reset: () => void
+}>(
+    {
     allProducts: [],
     currentProduct: {id: "", name: "", price: 0, productCategory: "SALAD", imageURL: "", vegan: false, warningsList: []},
     getById: () => {},
     post: () => {},
     delete: () => {},
-    update: () => {}
+    update: () => {},
+    reset: () => {}
 })
 
 export default function ProductContext(props: { children: ReactElement }) {
@@ -40,6 +49,7 @@ export default function ProductContext(props: { children: ReactElement }) {
             .then(response => {
                 setAllProducts([...allProducts, response.data])
                 toast.success("Successfully added!")
+                setCurrentProduct(dummyProduct)
             })
             .catch(() => toast.error("Failed to add product!"))
     }
@@ -56,15 +66,27 @@ export default function ProductContext(props: { children: ReactElement }) {
         axios.put<Product>(`/api/product/${id}`, product)
             .then(response => {
                 setAllProducts(allProducts.map(p => p.id === response.data.id ? response.data : p));
-                setCurrentProduct(response.data);
+                setCurrentProduct(dummyProduct);
                 toast.success("Successfully updated!");
             })
             .catch(() => toast.error("Failed to update product!"));
     }
 
+    function resetProduct(): void {
+        setCurrentProduct(dummyProduct)
+    }
+
     return (
         <ProductProvider.Provider
-            value={{allProducts: allProducts, currentProduct: currentProduct, getById: getProductById, post: postProduct, delete: deleteProduct, update: updateProduct}}>
+            value={{
+                allProducts: allProducts,
+                currentProduct: currentProduct,
+                getById: getProductById,
+                post: postProduct,
+                delete: deleteProduct,
+                update: updateProduct,
+                reset: resetProduct
+            }}>
             {props.children}
         </ProductProvider.Provider>
 

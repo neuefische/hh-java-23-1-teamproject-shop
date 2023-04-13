@@ -1,8 +1,8 @@
-.AddView {
+.FormView {
     align-self: center;
 }
 
-.AddView form {
+.FormView form {
     margin: 4rem;
     width: 50%;
     color: white;
@@ -37,7 +37,7 @@
     min-width: 165px;
 }
 
-.AddView form button {
+.FormView form button {
     align-self: flex-end;
     border: none;
     color: white;
@@ -45,6 +45,6 @@
     padding: 0.5rem;
 }
 
-.AddView form button:hover {
+.FormView form button:hover {
     background-color: #3f3f3f;
 }

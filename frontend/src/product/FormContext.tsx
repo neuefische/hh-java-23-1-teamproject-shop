@@ -1,6 +1,7 @@
 import {ChangeEvent, createContext, FormEvent, ReactElement, useContext, useEffect, useState} from "react";
 import {dummyProduct, Product} from "../model/product";
 import {ProductProvider} from "../ProductContext";
+import {useNavigate} from "react-router-dom";
 
 
 export const FormProvider = createContext<{
@@ -10,7 +11,9 @@ export const FormProvider = createContext<{
     checkboxChange: (event: ChangeEvent<HTMLInputElement>) => void,
     checkboxListChange: (event: ChangeEvent<HTMLInputElement>) => void,
     selectChange: (event: ChangeEvent<HTMLSelectElement>) => void,
-    save: (event: FormEvent<HTMLFormElement>) => void
+    save: (event: FormEvent<HTMLFormElement>) => void,
+    post: (event: FormEvent<HTMLFormElement>) => void
+    reset: () => void
 }>({
     dummy: dummyProduct,
     newProduct: dummyProduct,
@@ -18,13 +21,16 @@ export const FormProvider = createContext<{
     checkboxChange: () => {},
     checkboxListChange: () => {},
     selectChange: () => {},
-    save: () => {}
+    save: () => {},
+    post: () => {},
+    reset: () => {}
 })
 
 export default function FormContext(props: { children: ReactElement }) {
 
     const context = useContext(ProductProvider)
     const [newProduct, setNewProduct] = useState<Product>(context.currentProduct)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setNewProduct(context.currentProduct)
@@ -58,6 +64,17 @@ export default function FormContext(props: { children: ReactElement }) {
     function onSave(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault()
         context.update(newProduct.id, newProduct)
+        navigate("/menu")
+    }
+
+    function onPost(event: FormEvent<HTMLFormElement>): void {
+        event.preventDefault()
+        context.post(newProduct)
+        navigate("/menu")
+    }
+
+    function resetForm(): void {
+        context.reset()
     }
 
     return (
@@ -68,7 +85,9 @@ export default function FormContext(props: { children: ReactElement }) {
             checkboxChange: onCheckBoxChange,
             checkboxListChange: onCheckBoxChangeWhenList,
             selectChange: onSelectChange,
-            save: onSave
+            save: onSave,
+            post: onPost,
+            reset: resetForm
         }}>
             {props.children}
         </FormProvider.Provider>
