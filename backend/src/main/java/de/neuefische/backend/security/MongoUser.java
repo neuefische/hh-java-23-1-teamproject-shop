@@ -8,7 +8,7 @@ public record MongoUser (
         @Id
         String id,
         String username,
-        String password
-
+        String password,
+        Role role
 ) {
 }

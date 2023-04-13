@@ -4,15 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ProductContext from "./ProductContext";
+import UserContext from "./UserContext";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
     <React.StrictMode>
-        <ProductContext>
+        <UserContext>
+            <ProductContext>
                 <App/>
-        </ProductContext>
+            </ProductContext>
+        </UserContext>
     </React.StrictMode>
 );
 

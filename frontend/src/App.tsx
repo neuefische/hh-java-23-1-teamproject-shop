@@ -8,6 +8,7 @@ import Header from "./static/Header";
 import AddView from "./product/addView/AddView";
 import 'react-toastify/dist/ReactToastify.css';
 import ProductDetail from "./product/detail/ProductDetail";
+import LoginPage from "./login/LoginPage";
 
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
             <BrowserRouter>
                 <Header/>
                 <Routes>
+                    <Route path={"/login"} element={
+                        <LoginPage />
+                    }/>
                     <Route path={"/menu"} element={
                         <ProductGallery/>
                     }/>
