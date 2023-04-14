@@ -5,10 +5,12 @@ import {ToastContainer} from "react-toastify";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Header from "./static/Header";
 
-import AddView from "./product/addView/AddView";
 import 'react-toastify/dist/ReactToastify.css';
 import ProductDetail from "./product/detail/ProductDetail";
 import LoginPage from "./login/LoginPage";
+import ChangeView from "./product/changeView/ChangeView";
+import FormContext from "./product/FormContext";
+import AddView from "./product/add/AddView";
 
 
 function App() {
@@ -27,7 +29,14 @@ function App() {
                         <ProductDetail/>
                     }/>
                     <Route path={"/add"} element={
-                        <AddView/>
+                        <FormContext>
+                            <AddView/>
+                        </FormContext>
+                    }/>
+                    <Route path={"product/edit/:id"} element={
+                        <FormContext>
+                            <ChangeView/>
+                        </FormContext>
                     }/>
                 </Routes>
             </BrowserRouter>

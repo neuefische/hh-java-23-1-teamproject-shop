@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final IdService idService;
+
 
     public List<Product> findAllProducts() {
         return productRepository.findAll();
@@ -46,4 +48,12 @@ public class ProductService {
     public void deleteProduct(String id) {
         productRepository.deleteById(id);
     }
+
+
+    public Product updateProduct(Product product) {
+        return productRepository.save(product);
+    }
 }
+
+
+

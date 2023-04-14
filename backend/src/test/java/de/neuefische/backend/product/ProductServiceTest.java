@@ -101,4 +101,19 @@ class ProductServiceTest {
         verify(productRepository).findById("false-id");
         assertThat(actual).isInstanceOf(expected.getClass()).hasMessageContaining("false-id");
     }
+
+    @Test
+    void updateProductWhenProductIdExists() {
+        //Given
+        when(productRepository.save(product))
+                .thenReturn(product);
+
+        //When
+        Product actual = productService.updateProduct(product);
+
+        //Then
+        Product expected = product;
+        verify(productRepository).save(product);
+        assertThat(actual).isEqualTo(expected);
+    }
 }
