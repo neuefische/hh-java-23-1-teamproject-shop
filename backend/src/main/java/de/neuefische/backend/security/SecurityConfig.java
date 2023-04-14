@@ -29,6 +29,7 @@ public class SecurityConfig {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName(null);
         String productPath = "/api/product/**";
+        String productPath2 = "/api/user/**";
 
         return http
                 .csrf(csrf -> csrf
@@ -37,6 +38,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .httpBasic().and()
                 .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.POST, productPath2).permitAll()
                 .requestMatchers(HttpMethod.DELETE, productPath).hasRole(Role.ADMIN.toString())
                 .requestMatchers(HttpMethod.POST, productPath).hasRole(Role.ADMIN.toString())
                 .requestMatchers(HttpMethod.PUT, productPath).hasRole(Role.ADMIN.toString())

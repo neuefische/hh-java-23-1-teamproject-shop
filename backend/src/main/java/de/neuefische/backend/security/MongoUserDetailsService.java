@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import de.neuefische.backend.service.IdService;
 
 
+
 @Service
 @RequiredArgsConstructor
 public class MongoUserDetailsService implements UserDetailsService {
