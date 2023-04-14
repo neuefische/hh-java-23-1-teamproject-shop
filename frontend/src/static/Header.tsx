@@ -25,6 +25,8 @@ export default function Header() {
                 <img src={"https://openclipart.org/image/800px/298048"} alt={"Logo"}/>
                 <h1>Online-Shop</h1>
                 <button type={"button"} onClick={onClick}>{userContext.isLoggedIn ? "Logout" : "Login"}</button>
+                <button type={"button"} onClick={() => navigate("/signup")} >{"Sign UP"}</button>
+
             </div>
             <NavigationBar/>
         </div>

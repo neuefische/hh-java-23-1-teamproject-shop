@@ -1,6 +1,7 @@
 import {createContext, ReactElement, useEffect, useState} from "react";
 import axios from "axios";
 import {User} from "./model/user";
+import {toast} from "react-toastify";
 
 
 export const UserProvider = createContext<{
@@ -9,15 +10,20 @@ export const UserProvider = createContext<{
     isLoggedIn: boolean,
     isAdmin: boolean,
     logout: () => void
+    signup: (username: string, password: string) => Promise<any>
 }>({
     login: () => Promise.resolve(),
     isLoggedIn: false,
     isAdmin: false,
-    logout: () => {}
+    logout: () => {
+    },
+    signup: () => Promise.resolve()
 })
-export default function UserContext(props: {children: ReactElement}) {
+export default function UserContext(props: { children: ReactElement }) {
 
     const [user, setUser] = useState<User>()
+    const [password, setPassword] = useState<string>("")
+    const [username, setUsername] = useState<string>("")
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [isAdmin, setIsAdmin] = useState<boolean>(false)
 
@@ -29,15 +35,25 @@ export default function UserContext(props: {children: ReactElement}) {
     }, [user])
 
     function loginUser(username: string, password: string): Promise<void> {
-        return axios.post("/api/user", undefined, {auth: {username,password}})
+        return axios.post("/api/user", undefined, {auth: {username, password}})
             .then(response => setUser(response.data))
     }
 
-function logout(): void {
+    function logout(): void {
         axios.post("/api/user/logout", undefined)
             .then(() => {
                 setUser(undefined)
             })
+    }
+
+    function signUp(username: string, password: string) {
+        return axios.post("/api/user/signup", {username, password})
+            .then(response => {
+                setUsername(username)
+                setPassword(password)
+
+            })
+            .catch(() => toast.error("SignUp failed!"))
     }
 
     return (
@@ -46,7 +62,8 @@ function logout(): void {
             currentUser: user,
             isLoggedIn: isLoggedIn,
             isAdmin: isAdmin,
-            logout: logout
+            logout: logout,
+            signup: signUp
         }}>
             {props.children}
         </UserProvider.Provider>

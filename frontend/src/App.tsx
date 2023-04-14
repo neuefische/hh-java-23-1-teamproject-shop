@@ -11,6 +11,7 @@ import LoginPage from "./login/LoginPage";
 import ChangeView from "./product/changeView/ChangeView";
 import FormContext from "./product/FormContext";
 import AddView from "./product/add/AddView";
+import SignUpPage from "./signUp/signUpPage";
 
 
 function App() {
@@ -21,6 +22,9 @@ function App() {
                 <Routes>
                     <Route path={"/login"} element={
                         <LoginPage />
+                    }/>
+                    <Route path={"/signup"} element={
+                        <SignUpPage />
                     }/>
                     <Route path={"/menu"} element={
                         <ProductGallery/>

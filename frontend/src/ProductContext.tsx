@@ -76,6 +76,8 @@ export default function ProductContext(props: { children: ReactElement }) {
         setCurrentProduct(dummyProduct)
     }
 
+
+
     return (
         <ProductProvider.Provider
             value={{
