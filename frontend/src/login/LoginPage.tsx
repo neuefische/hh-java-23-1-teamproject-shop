@@ -17,15 +17,19 @@ export default function LoginPage() {
             .then(() => {navigate("/menu")})
     }
 
-    return (
-        <div className={"LoginPage"} onSubmit={onSubmit}>
-            <form>
-                <label>Benutzername: </label>
-                <input type={"text"} placeholder={"Benutzername eingeben"} onChange={e => setUsername(e.target.value)}/>
-                <label>Passwort: </label>
-                <input type={"password"} placeholder={"Passwort eingeben"} onChange={e => setPassword(e.target.value)}/>
-                <button type={"submit"}>Login</button>
-            </form>
-        </div>
-    )
+
+return (
+    <div className={"LoginPage"} onSubmit={onSubmit}>
+        <form>
+            <label>Benutzername: </label>
+            <input type={"text"} placeholder={"Benutzername eingeben"} onChange={e => setUsername(e.target.value)}/>
+            <label>Passwort: </label>
+            <input type={"password"} placeholder={"Passwort eingeben"} onChange={e => setPassword(e.target.value)}/>
+            <button type={"submit"}>Login</button>
+            <button onClick={()=> {localStorage.removeItem('token')}}>Logout</button>
+
+
+        </form>
+    </div>
+)
 }

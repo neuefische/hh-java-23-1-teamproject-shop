@@ -8,9 +8,7 @@ export const UserProvider = createContext<{
 }>({
     login: () => Promise.resolve()
 })
-
 export default function UserContext(props: {children: ReactElement}) {
-
     const [user, setUser] = useState<User>()
 
     function loginUser(username: string, password: string): Promise<void> {
@@ -19,6 +17,13 @@ export default function UserContext(props: {children: ReactElement}) {
         return Promise.resolve()
     }
 
+function logout(){
+        return axios.post("/api/user/logout")
+            .then(() => {
+                setUser(undefined)
+            })
+return {logout}
+    }
 
     return (
         <UserProvider.Provider value={{
