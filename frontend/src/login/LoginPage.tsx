@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {FormEvent, useContext, useState} from "react";
 import {UserProvider} from "../UserContext";
 import {useNavigate} from "react-router-dom";
 
@@ -12,15 +12,16 @@ export default function LoginPage() {
 
     const userContext = useContext(UserProvider)
 
-    function onSubmit() {
+    function onSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
         userContext.login(username, password)
             .then(() => {navigate("/menu")})
     }
 
 
 return (
-    <div className={"LoginPage"} onSubmit={onSubmit}>
-        <form>
+    <div className={"LoginPage"}>
+        <form onSubmit={onSubmit}>
             <label>Benutzername: </label>
             <input type={"text"} placeholder={"Benutzername eingeben"} onChange={e => setUsername(e.target.value)}/>
             <label>Passwort: </label>

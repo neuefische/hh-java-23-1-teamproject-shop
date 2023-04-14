@@ -114,6 +114,7 @@ class ProductIntegrationTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser(roles = "ADMIN")
     void updateProductCorrectExpectUpdatedProduct() throws Exception {
 
         productRepository.save(dummyProduct);
@@ -123,6 +124,7 @@ class ProductIntegrationTest {
 
 
         mvc.perform(put("/api/product/" + dummyProduct.id())
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonModifiedProduct))
                 .andExpect(status().isAccepted())
@@ -135,11 +137,13 @@ class ProductIntegrationTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser(roles = "ADMIN")
     void updateProductCreated_whenProductDoesntExist() throws Exception {
         String responseJson =
                 mvc.perform(put("/api/product/" + dummyProduct.id())
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(jsonProduct))
+                                .with(csrf())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonProduct))
                         .andExpect(status().isCreated())
                         .andExpect(content().json("""
                                 {

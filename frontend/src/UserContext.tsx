@@ -4,26 +4,33 @@ import {User} from "./model/user";
 
 
 export const UserProvider = createContext<{
-    login: (username: string, password: string) => Promise<void>,
+    login: (username: string, password: string) => Promise<any>,
     currentUser?: User,
     isLoggedIn: boolean,
+    isAdmin: boolean,
     logout: () => void
 }>({
     login: () => Promise.resolve(),
     isLoggedIn: false,
+    isAdmin: false,
     logout: () => {}
 })
 export default function UserContext(props: {children: ReactElement}) {
 
     const [user, setUser] = useState<User>()
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+    const [isAdmin, setIsAdmin] = useState<boolean>(false)
 
-    useEffect(() => setIsLoggedIn(user !== undefined), [user])
+    useEffect(() => {
+        setIsLoggedIn(user !== undefined)
+        isLoggedIn
+            ? setIsAdmin(user?.role === "ADMIN")
+            : setIsAdmin(false)
+    }, [user])
 
     function loginUser(username: string, password: string): Promise<void> {
-        axios.post("/api/user", undefined, {auth: {username,password}})
+        return axios.post("/api/user", undefined, {auth: {username,password}})
             .then(response => setUser(response.data))
-        return Promise.resolve()
     }
 
 function logout(): void {
@@ -38,6 +45,7 @@ function logout(): void {
             login: loginUser,
             currentUser: user,
             isLoggedIn: isLoggedIn,
+            isAdmin: isAdmin,
             logout: logout
         }}>
             {props.children}
