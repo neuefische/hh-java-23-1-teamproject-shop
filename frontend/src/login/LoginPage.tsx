@@ -26,9 +26,6 @@ return (
             <label>Passwort: </label>
             <input type={"password"} placeholder={"Passwort eingeben"} onChange={e => setPassword(e.target.value)}/>
             <button type={"submit"}>Login</button>
-            <button onClick={()=> {localStorage.removeItem('token')}}>Logout</button>
-
-
         </form>
     </div>
 )
