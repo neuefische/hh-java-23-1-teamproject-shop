@@ -1,6 +1,7 @@
 import {FormEvent, useContext, useState} from "react";
 import {UserProvider} from "../UserContext";
 import {useNavigate} from "react-router-dom";
+import "./LoginPage.css"
 
 
 export default function LoginPage() {
@@ -22,11 +23,13 @@ export default function LoginPage() {
 return (
     <div className={"LoginPage"}>
         <form onSubmit={onSubmit}>
+            <div className={"form-element"}>
             <label>Benutzername: </label>
             <input type={"text"} placeholder={"Benutzername eingeben"} onChange={e => setUsername(e.target.value)}/>
             <label>Passwort: </label>
             <input type={"password"} placeholder={"Passwort eingeben"} onChange={e => setPassword(e.target.value)}/>
             <button type={"submit"}>Login</button>
+            </div>
         </form>
     </div>
 )

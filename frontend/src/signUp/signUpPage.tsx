@@ -1,6 +1,7 @@
 import {FormEvent, useContext, useState} from "react";
 import {UserProvider} from "../UserContext";
 import {useNavigate} from "react-router-dom";
+import "./signUpPage.css"
 
 
 export default function SignUpPage() {
