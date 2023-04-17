@@ -1,9 +1,8 @@
 import {createContext, ReactElement, useEffect, useState} from "react";
-import {dummyProduct, Product} from "../src/model/product";
 import {dummyOrder, Order, orderStatus} from "../src/model/order";
 import axios from "axios/index";
 import {toast} from "react-toastify";
-import {ProductProvider} from "./ProductContext";
+
 
 export const OrderProvider = createContext<{
     allOrders: Order[],
