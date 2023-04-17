@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {FormProvider} from "../FormContext";
+import {FormProvider} from "../../../context/FormContext";
 import "./FormView.css"
 
 export default function FormView(props: {toPost: boolean}) {

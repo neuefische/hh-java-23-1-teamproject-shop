@@ -1,6 +1,6 @@
 import ProductCard from "../card/ProductCard";
 import {useContext} from "react";
-import {ProductProvider} from "../../ProductContext";
+import {ProductProvider} from "../../../context/ProductContext";
 import "./ProductGallery.css"
 
 

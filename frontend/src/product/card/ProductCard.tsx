@@ -2,7 +2,7 @@ import {Product} from "../../model/product";
 import "./ProductCard.css"
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
-import {ProductProvider} from "../../ProductContext";
+import {ProductProvider} from "../../../context/ProductContext";
 
 type ProductCardProps = {
     product: Product
