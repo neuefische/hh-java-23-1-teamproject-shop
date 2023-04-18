@@ -1,5 +1,5 @@
 import {useContext, useEffect} from "react";
-import {ProductProvider} from "../../../context/ProductContext";
+import {ProductProvider} from "../../context/ProductContext";
 import {useParams} from "react-router-dom";
 import "./ProductDetail.css"
 

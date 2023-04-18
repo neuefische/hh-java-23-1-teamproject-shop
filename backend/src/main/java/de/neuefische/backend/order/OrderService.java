@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final IdService idService;
+
+
     public List<Order> listOrders() {
         return orderRepository.findAll();
     }
@@ -29,7 +32,7 @@ public class OrderService {
         }
     }
 
-    public Order orderProducts(List<String> productIds) {
-        return orderRepository.save(new Order(idService.createId(), productIds, OrderStatus.ORDERED));
+    public Order orderProducts(Order order) {
+        return orderRepository.save(new Order(idService.createId(), order.productIds()));
     }
 }

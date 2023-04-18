@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {FormProvider} from "../../../context/FormContext";
+import {FormProvider} from "../../context/FormContext";
 import "./FormView.css"
 
 export default function FormView(props: {toPost: boolean}) {
@@ -8,7 +8,7 @@ export default function FormView(props: {toPost: boolean}) {
 
     return (
         <div className={"FormView"}>
-            <form onSubmit={props.toPost ? formContext.post: formContext.save}>
+            <form onSubmit={props.toPost ? formContext.post : formContext.save}>
 
                 <div className={"form-element"}>
                     <label htmlFor={"product-name"}>Name: </label>

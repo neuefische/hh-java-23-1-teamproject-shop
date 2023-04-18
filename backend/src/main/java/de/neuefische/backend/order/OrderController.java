@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "api/order", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -26,8 +27,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public Order makeOrder(@RequestBody List<String> productIds) {
-        return orderService.orderProducts(productIds);
+    public Order makeOrder(@RequestBody Order order) {
+        return orderService.orderProducts(order);
     }
 
 }
