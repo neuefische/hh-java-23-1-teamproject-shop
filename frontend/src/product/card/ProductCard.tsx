@@ -25,8 +25,9 @@ export default function ProductCard(props: ProductCardProps) {
     }
 
     function onAddToOrder() {
-        orderContext.setCurrentOrder(orderContext.currentOrder.productIds.set(props.product.id, amount))
-        navigate("/order")
+        orderContext.setCurrentOrder(
+            {...orderContext.currentOrder, productIds: orderContext.currentOrder.productIds.set(props.product.id, amount)})
+
     }
 
 
