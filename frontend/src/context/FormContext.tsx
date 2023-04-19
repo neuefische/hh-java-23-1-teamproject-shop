@@ -1,6 +1,6 @@
 import {ChangeEvent, createContext, FormEvent, ReactElement, useContext, useEffect, useState} from "react";
 import {dummyProduct, Product} from "../model/product";
-import {ProductProvider} from "../ProductContext";
+import {ProductProvider} from "./ProductContext";
 import {useNavigate} from "react-router-dom";
 
 

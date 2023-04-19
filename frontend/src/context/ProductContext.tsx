@@ -1,5 +1,5 @@
 import {createContext, ReactElement, useEffect, useState} from "react";
-import {dummyProduct, Product} from "./model/product";
+import {dummyProduct, Product} from "../model/product";
 import axios from "axios";
 import {toast} from "react-toastify";
 

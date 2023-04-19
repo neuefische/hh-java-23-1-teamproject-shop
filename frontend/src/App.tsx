@@ -8,8 +8,9 @@ import Header from "./static/Header";
 import 'react-toastify/dist/ReactToastify.css';
 import ProductDetail from "./product/detail/ProductDetail";
 import ChangeView from "./product/changeView/ChangeView";
-import FormContext from "./product/FormContext";
+import FormContext from "./context/FormContext";
 import AddView from "./product/add/AddView";
+import OrderPage from "./OrderPage/OrderPage";
 
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
             <BrowserRouter>
                 <Header/>
                 <Routes>
+                    <Route path={"/order"} element={
+                        <OrderPage/>
+                    }/>
                     <Route path={"/menu"} element={
                         <ProductGallery/>
                     }/>

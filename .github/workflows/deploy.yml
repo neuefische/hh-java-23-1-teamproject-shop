@@ -1,0 +1,61 @@
+ame: Deploy to fly.io           #wähle einen Namen
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: frontend-build
+          path: frontend/build/
+  build-backend:
+    runs-on: ubuntu-latest
+    needs: build-frontend
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '19'                          #wähle entsprechende Javaversion
+          distribution: 'adopt'
+      - uses: actions/download-artifact@v2
+        with:
+          name: frontend-build
+          path: backend/src/main/resources/static
+      - name: Build with maven
+        run: mvn -B package --file backend/pom.xml
+      - uses: actions/upload-artifact@v2
+        with:
+          name: app.jar
+          path: backend/target/app.jar
+  deploy-fly:
+    runs-on: ubuntu-latest
+    needs: build-backend
+    environment:
+      name: production-fly.io
+      url: https://driver-app.fly.dev                #hier die url angeben, unter der die app deployed wird, damit sie in github verlinkt wird
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_KEY }}      # FLY_API_KEY Müssen wir im Github Repository angeben bei new repository secret(s.u.)
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: app.jar
+          path: backend/target
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy                                 # Deployed die Anwendung. Das ganze funktioniert aber wie gesagt nur,
+        # wenn die App vorher gelauncht wurde.
