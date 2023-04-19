@@ -47,7 +47,7 @@ jobs:
     needs: build-backend
     environment:
       name: production-fly.io
-      url: https://driver-app.fly.dev                #hier die url angeben, unter der die app deployed wird, damit sie in github verlinkt wird
+      url: https://hh-java-23-1-teamproject-shop.fly.dev               #hier die url angeben, unter der die app deployed wird, damit sie in github verlinkt wird
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_KEY }}      # FLY_API_KEY Müssen wir im Github Repository angeben bei new repository secret(s.u.)
     steps:
