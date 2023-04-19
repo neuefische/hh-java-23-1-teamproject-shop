@@ -9,7 +9,7 @@ jobs:
   build-frontend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-frontend
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
@@ -51,7 +51,7 @@ jobs:
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_KEY }}      # FLY_API_KEY Müssen wir im Github Repository angeben bei new repository secret(s.u.)
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/download-artifact@v2
         with:
           name: app.jar

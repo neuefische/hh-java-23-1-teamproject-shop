@@ -1,6 +1,5 @@
 import {OrderProvider} from "../context/OrderContext";
 import {useContext, useEffect, useState} from "react";
-import {Order} from "../model/order";
 import {ProductProvider} from "../context/ProductContext";
 import {Product} from "../model/product";
 

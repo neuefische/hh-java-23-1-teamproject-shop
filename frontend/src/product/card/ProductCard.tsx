@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import {ProductProvider} from "../../context/ProductContext";
 import {OrderProvider} from "../../context/OrderContext";
-import {Order} from "../../model/order";
 
 type ProductCardProps = {
     product: Product

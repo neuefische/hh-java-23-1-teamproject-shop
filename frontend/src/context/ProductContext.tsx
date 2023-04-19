@@ -28,7 +28,9 @@ export default function ProductContext(props: { children: ReactElement }) {
 
     useEffect(() => {
             getAllProducts()
-        }, []
+        },
+        //eslint-disable-next-line
+        []
     )
 
     function getAllProducts(): void {

@@ -1,4 +1,4 @@
-import {createContext, Dispatch, ReactElement, SetStateAction, useEffect, useState} from "react";
+import {createContext, Dispatch, ReactElement, SetStateAction, useState} from "react";
 import {dummyOrder, Order} from "../model/order";
 import axios from "axios";
 import {toast} from "react-toastify";
@@ -22,7 +22,7 @@ export default function OrderContext(props: { children: ReactElement }) {
 
     function postOrder(): void {
         axios.post<Order>("/api/order", currentOrder)
-            .then(response => {
+            .then(() => {
                 setCurrentOrder(dummyOrder)
             })
             .catch(() => toast.error("Failed to add order!"))
