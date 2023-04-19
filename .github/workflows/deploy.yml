@@ -1,4 +1,4 @@
-ame: Deploy to fly.io           #wähle einen Namen
+name: Deploy to fly.io           #wähle einen Namen
 
 on:
   push:
