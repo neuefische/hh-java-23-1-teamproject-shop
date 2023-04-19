@@ -13,27 +13,27 @@ export default function ProductDetail() {
         if (id) {
             context.getById(id)
         }
-    }, [])
+    },
+        //eslint-disable-next-line
+        [])
 
     function translateWarnings(): string {
-        let translatedWarnings: string = context.currentProduct.warningsList.toString()
+        return context.currentProduct.warningsList.toString()
                                             .replace("GLUTEN", "Gluten")
                                             .replace("LACTOSE", "Lactose")
                                             .replace("FRUCTOSE", "Fructose")
                                             .replace("NUTS", "Nüsse")
-        return translatedWarnings
     }
 
 
     function translateCategory(): string {
-        let translatedCategory: string = context.currentProduct.productCategory
+        return context.currentProduct.productCategory
             .replace("APPETIZER", "Vorspeise")
             .replace("SALAD", "Salat")
             .replace("MAIN_DISH", "Hauptspeise")
             .replace("DESSERT", "Dessert")
             .replace("SNACK", "Snack")
             .replace("DRINK", "Getränk")
-        return translatedCategory
     }
 
     return (

@@ -7,6 +7,7 @@ export default function AddView() {
 
     const formContext = useContext(FormProvider)
 
+    //eslint-disable-next-line
     useEffect(() => formContext.reset, [])
 
     return (
