@@ -13,7 +13,9 @@ export default function ChangeView() {
         if (id) {
             context.getById(id)
         }
-    }, [])
+    },
+        //eslint-disable-next-line
+        [])
 
 
     return (

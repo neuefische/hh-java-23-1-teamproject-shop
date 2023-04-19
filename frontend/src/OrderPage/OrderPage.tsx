@@ -13,18 +13,14 @@ export default function OrderPage() {
 
     useEffect(() => {
             makeOrderBySearchingForProductId()
-        }, [orderContext.currentOrder]
+        },
+        //eslint-disable-next-line
+        [orderContext.currentOrder]
     )
 
     function makeOrderBySearchingForProductId() {
         let listOfProducts: Product[]
-        listOfProducts = productContext.allProducts.filter(product => {
-            if (orderContext.currentOrder.productIds.has(product.id)) {
-                return product
-            }
-
-        })
-
+        listOfProducts = productContext.allProducts.filter(product => orderContext.currentOrder.productIds.has(product.id))
 
         setProductList(listOfProducts)
 
