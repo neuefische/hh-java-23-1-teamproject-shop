@@ -43,7 +43,7 @@ export default function ProductCard(props: ProductCardProps) {
                     <button onClick={onDeleteClick}>Delete</button>
                     <button onClick={()=> {navigate("/product/edit/" + props.product.id)}}>Edit</button>
                 </div>
-                <div>
+                <div className={"order-form"}>
                     <label htmlFor={"product-amount"}>Anzahl: </label>
                     <input type={"number"} id={"product-amount"} name={"amount"} value={amount}
                            onChange={(event) => setAmount(event.target.value as unknown as number)}/>

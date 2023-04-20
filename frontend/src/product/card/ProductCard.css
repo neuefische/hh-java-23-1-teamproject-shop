@@ -4,7 +4,7 @@
     justify-content: flex-end;
     color: white;
     width: 200px;
-    height: 200px;
+    height: auto;
     background-color: #2f2f2f;
     padding: 1.5rem;
     border-radius: 15px;
@@ -29,4 +29,26 @@
     font-size: medium;
     font-weight: 300;
     padding: 0.5rem;
+}
+
+.ProductCard input, .ProductCard select {
+    width: 33%;
+    min-width: 150px;
+    background-color: #1f1f1f;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    padding: 0.5rem
+}
+
+.ProductCard button {
+    align-self: flex-end;
+    border: none;
+    color: white;
+    background-color: #1f1f1f;
+    padding: 0.5rem;
+}
+
+.ProductCard button:hover {
+    background-color: #3f3f3f;
 }
